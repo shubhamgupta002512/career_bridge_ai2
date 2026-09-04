@@ -10,7 +10,7 @@ const getCareerAdvice = async (userProfile, question) => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: process.env.AI_MODEL || "llama-3.1-8b-instant",
+          model: process.env.AI_MODEL || "openai/gpt-oss-20b",
           messages: [
             {
               role: "system",
