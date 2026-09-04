@@ -10,7 +10,7 @@ const getCareerAdvice = async (userProfile, question) => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "qwen/qwen3.6-27b",
+          model: process.env.AI_MODEL || "llama-3.1-8b-instant",
           messages: [
             {
               role: "system",
@@ -21,7 +21,7 @@ const getCareerAdvice = async (userProfile, question) => {
               content: `User Profile Context (if any): ${JSON.stringify(userProfile || {})}\n\nUser Question: ${question}`
             }
           ],
-          max_completion_tokens: 500,
+          max_completion_tokens: 256,
           temperature: 0.4
         })
       });
