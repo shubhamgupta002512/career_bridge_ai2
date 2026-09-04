@@ -20,7 +20,9 @@ const getCareerAdvice = async (userProfile, question) => {
               role: "user",
               content: `User Profile Context (if any): ${JSON.stringify(userProfile || {})}\n\nUser Question: ${question}`
             }
-          ]
+          ],
+          max_completion_tokens: 500,
+          temperature: 0.4
         })
       });
 
@@ -41,8 +43,12 @@ const getCareerAdvice = async (userProfile, question) => {
           isRealAI: true
         };
       } else if (data.error) {
+        const retryMessage = response.status === 429
+          ? 'Groq is temporarily rate-limited. Please try again in about a minute.'
+          : data.error.message;
+
         return {
-          response: `API Error from Groq: ${data.error.message}`,
+          response: `API Error from Groq: ${retryMessage}`,
           isRealAI: false
         };
       }
